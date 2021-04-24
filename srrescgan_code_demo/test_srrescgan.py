@@ -27,13 +27,13 @@ for path_lr in glob.glob(test_img_folder):
     idx += 1
     base = osp.splitext(osp.basename(path_lr))[0]
     print('Img:', idx, base)
-    
+
     # read images: LR
     img_lr = cv2.imread(path_lr, cv2.IMREAD_COLOR)
     img_LR = torch.from_numpy(np.transpose(img_lr[:, :, [2, 1, 0]], (2, 0, 1))).float()
     img_LR = img_LR.unsqueeze(0)
     img_LR = img_LR.to(device)
-    
+
     # testing
     t = timer()
     t.tic()
@@ -42,13 +42,13 @@ for path_lr in glob.glob(test_img_folder):
     end_time = t.toc()
     output_sr = output_SR.data.squeeze().float().cpu().clamp_(0, 255).numpy()
     output_sr = np.transpose(output_sr[[2, 1, 0], :, :], (1, 2, 0))
-    
+
     test_results['time'].append(end_time)
     print('{:->4d}--> {:>10s}, time: {:.4f} sec.'.format(idx, base, end_time))
-    
-    # save images            
+
+    # save images
     cv2.imwrite('sr_results_x4/{:s}.png'.format(base), output_sr)
-    
+
     del img_LR, img_lr
     del  output_SR, output_sr
     torch.cuda.empty_cache()

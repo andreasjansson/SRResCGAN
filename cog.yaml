@@ -1,0 +1,22 @@
+model: "cog_predict.py:Model"
+workdir:  srrescgan_code_demo
+examples:
+  - input:
+      image: "@srrescgan_code_demo/samples/bird.png"
+  - input:
+      image: "@srrescgan_code_demo/samples/guitar.png"
+  - input:
+      image: "@srrescgan_code_demo/samples/castle.png"
+  - input:
+      image: "@srrescgan_code_demo/samples/eagle.png"
+environment:
+  architectures:
+    - "cpu"
+  python_version: "3.8"
+  python_packages:
+    - "numpy==1.20.0"
+    - "opencv-python==4.5.1.48"
+    - "torch==1.8.0"
+  system_packages:
+    - "libgl1-mesa-dev"
+    - "libglib2.0-0"
